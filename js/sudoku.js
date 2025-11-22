@@ -17,6 +17,7 @@ function crearTablero() {
             const input = document.createElement("input");
             input.type = "text";
             input.maxLength = 1;
+            input.readOnly = true;
             input.classList.add("casilla");
             input.dataset.fila = i;
             input.dataset.columna = j;
@@ -25,8 +26,6 @@ function crearTablero() {
             if (j % 3 === 0) input.classList.add("borde-izquierdo");
             if (i === 8) input.classList.add("borde-inferior");
             if (j === 8) input.classList.add("borde-derecho");
-
-            input.addEventListener("input", validarCasilla);
 
             input.addEventListener("focus", () => {
                 casillaActiva = input;
@@ -100,31 +99,6 @@ function moverFocoSiguiente() {
     }
 }
 
-function validarCasilla(e) {
-    const input = e.target;
-    input.classList.remove("invalido");
-    const valorIngresado = input.value;
-
-    if (!/^[1-9]$/.test(valorIngresado)) {
-        input.value = "";
-        return;
-    }
-
-    const fila = parseInt(input.dataset.fila);
-    const columna = parseInt(input.dataset.columna);
-    const valorCorrecto = tableroCompleto[fila][columna];
-
-    if (valorIngresado !== valorCorrecto) {
-        input.classList.add("invalido");
-    }
-
-    verificarNumerosCompletados();
-
-    if (validarSudoku()) {
-        mostrarMensaje("¡Has ganado!", "exito");
-    }
-}
-
 function verificarNumerosCompletados() {
     for (let grupoFila = 0; grupoFila < 3; grupoFila++) {
         for (let grupoColumna = 0; grupoColumna < 3; grupoColumna++) {
@@ -195,10 +169,16 @@ teclas.forEach(fila => {
 
         if (letra === "eliminar") {
             boton.classList.add("eliminar");
-            boton.innerHTML = `<span class="material-symbols-outlined">backspace</span>`;
+            const iconEliminar = document.createElement("span");
+            iconEliminar.className = "material-symbols-outlined";
+            iconEliminar.textContent = "backspace";
+            boton.appendChild(iconEliminar);
         } else if (letra === "enviar") {
             boton.classList.add("enviar");
-            boton.innerHTML = `<span class="material-symbols-outlined">keyboard_return</span>`;
+            const iconEnviar = document.createElement("span");
+            iconEnviar.className = "material-symbols-outlined";
+            iconEnviar.textContent = "keyboard_return";
+            boton.appendChild(iconEnviar);
         } else {
             boton.textContent = letra;
         }
@@ -239,7 +219,7 @@ contenedorTeclado.addEventListener("click", (e) => {
                 casillaActiva.focus();
             } else {
                 casillaActiva.classList.remove("invalido");
-                casillaActiva.dispatchEvent(new Event("input"));
+                verificarNumerosCompletados();
                 moverFocoSiguiente();
             }
         }
