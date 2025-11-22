@@ -187,12 +187,7 @@ btnReiniciar.addEventListener("click", () => {
     cargarSudoku();
 });
 
-contenedorTeclado.addEventListener("click", (e) => {
-    const boton = e.target.closest("button");
-    if (!boton) return;
-
-    const tecla = boton.getAttribute("data-tecla");
-
+function manejarEntrada(tecla) {
     if (tecla === "enviar") {
         if (validarSudoku()) {
             mostrarModal();
@@ -227,6 +222,39 @@ contenedorTeclado.addEventListener("click", (e) => {
                 }
             }
         }
+    }
+}
+
+contenedorTeclado.addEventListener("click", (e) => {
+    const boton = e.target.closest("button");
+    if (!boton) return;
+
+    const tecla = boton.getAttribute("data-tecla");
+    manejarEntrada(tecla);
+});
+
+document.addEventListener("keydown", (e) => {
+    const tecla = e.key;
+
+    if (tecla >= "1" && tecla <= "9") {
+        manejarEntrada(tecla);
+    } else if (tecla === "Backspace" || tecla === "Delete") {
+        manejarEntrada("eliminar");
+    } else if (tecla === "Enter") {
+        manejarEntrada("enviar");
+    } else if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(tecla)) {
+        if (!casillaActiva) return;
+
+        let fila = parseInt(casillaActiva.dataset.fila);
+        let columna = parseInt(casillaActiva.dataset.columna);
+
+        if (tecla === "ArrowUp") fila = Math.max(0, fila - 1);
+        if (tecla === "ArrowDown") fila = Math.min(8, fila + 1);
+        if (tecla === "ArrowLeft") columna = Math.max(0, columna - 1);
+        if (tecla === "ArrowRight") columna = Math.min(8, columna + 1);
+
+        casillas[fila][columna].focus();
+        casillaActiva = casillas[fila][columna];
     }
 });
 
