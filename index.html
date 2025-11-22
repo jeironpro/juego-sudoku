@@ -15,7 +15,6 @@
     </header>
     <main>
         <div class="contenedor-principal">
-            <div class="mensaje" id="mensaje"></div>
             <div class="tablero sudoku" id="tablero"></div>
             <div class="teclado" id="teclado"></div>
         </div>
@@ -23,6 +22,20 @@
     <footer>
         <p>&copy; Todos los derechos reservados 2025 - JeironPro</p>
     </footer>
+
+    <!-- Modal de Victoria -->
+    <div class="contenedor-modal" id="modal-victoria">
+        <div class="modal">
+            <span class="material-symbols-outlined icono-victoria">emoji_events</span>
+            <h2>¡Felicidades!</h2>
+            <p>Has completado el Sudoku correctamente.</p>
+            <button id="btn-reiniciar" class="btn-reiniciar">
+                <span class="material-symbols-outlined">replay</span>
+                Jugar de nuevo
+            </button>
+        </div>
+    </div>
+
     <script src="js/sudoku.js"></script>
 </body>
 </html>

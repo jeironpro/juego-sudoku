@@ -1,5 +1,4 @@
 const tablero = document.getElementById("tablero");
-const mensaje = document.getElementById("mensaje");
 const contenedorTeclado = document.getElementById("teclado");
 const casillas = Array.from({ length: 9 }, () => Array(9));
 
@@ -59,7 +58,6 @@ function cargarSudoku() {
     fetch("json/sudokus.json")
         .then(respuesta => {
             if (!respuesta.ok) {
-                console.log(`Error al intentar cargar los tableros: ${respuesta.status}`);
                 throw new Error("Error al cargar sudoku");
             }
             return respuesta.json();
@@ -136,22 +134,6 @@ function validarSudoku() {
     return true;
 }
 
-function mostrarMensaje(texto, tipo = "") {
-    mensaje.style.display = "block";
-    mensaje.textContent = texto;
-    mensaje.className = "mensaje";
-
-    if (tipo) {
-        mensaje.classList.add(tipo, "mensaje-sudoku");
-    }
-
-    setTimeout(() => {
-        mensaje.textContent = "";
-        mensaje.className = "mensaje";
-        mensaje.style.display = "none";
-    }, 5000);
-}
-
 const teclas = [
     ["1", "2", "3"],
     ["4", "5", "6"],
@@ -189,23 +171,41 @@ teclas.forEach(fila => {
     contenedorTeclado.appendChild(filaTeclado);
 });
 
+const modalVictoria = document.getElementById("modal-victoria");
+const btnReiniciar = document.getElementById("btn-reiniciar");
+
+function mostrarModal() {
+    modalVictoria.classList.add("mostrar");
+}
+
+function ocultarModal() {
+    modalVictoria.classList.remove("mostrar");
+}
+
+btnReiniciar.addEventListener("click", () => {
+    ocultarModal();
+    cargarSudoku();
+});
+
 contenedorTeclado.addEventListener("click", (e) => {
     const boton = e.target.closest("button");
     if (!boton) return;
 
     const tecla = boton.getAttribute("data-tecla");
+
+    if (tecla === "enviar") {
+        if (validarSudoku()) {
+            mostrarModal();
+        }
+        return;
+    }
+
     if (!casillaActiva || casillaActiva.disabled) return;
 
     if (tecla === "eliminar") {
         casillaActiva.value = "";
         casillaActiva.focus();
         casillaActiva.classList.remove("invalido");
-    } else if (tecla === "enviar") {
-        if (validarSudoku()) {
-            mostrarMensaje("¡Has ganado!", "exito");
-        } else {
-            mostrarMensaje("Aún hay errores o casillas vacías", "error");
-        }
     } else {
         if (/^[1-9]$/.test(tecla)) {
             casillaActiva.value = tecla;
@@ -220,7 +220,11 @@ contenedorTeclado.addEventListener("click", (e) => {
             } else {
                 casillaActiva.classList.remove("invalido");
                 verificarNumerosCompletados();
-                moverFocoSiguiente();
+                if (validarSudoku()) {
+                    mostrarModal();
+                } else {
+                    moverFocoSiguiente();
+                }
             }
         }
     }

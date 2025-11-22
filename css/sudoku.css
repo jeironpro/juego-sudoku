@@ -272,3 +272,92 @@ footer p {
         font-size: 0.85em;
     }
 }
+
+/* Modal de Victoria */
+.contenedor-modal {
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    bottom: 0;
+    display: none;
+    justify-content: center;
+    left: 0;
+    opacity: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.contenedor-modal.mostrar {
+    display: flex;
+    opacity: 1;
+}
+
+.modal {
+    align-items: center;
+    animation: scaleUp 0.3s ease-out;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    max-width: 90%;
+    padding: 30px;
+    text-align: center;
+    width: 400px;
+}
+
+@keyframes scaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.icono-victoria {
+    color: #FFD700;
+    font-size: 64px !important;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.modal h2 {
+    color: #112ca3;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.modal p {
+    color: #555;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+.btn-reiniciar {
+    align-items: center;
+    background-color: #112ca3;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    font-size: 16px;
+    font-weight: bold;
+    gap: 8px;
+    padding: 12px 24px;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-reiniciar:hover {
+    background-color: #0d2180;
+    transform: translateY(-2px);
+}
+
+.btn-reiniciar span {
+    font-size: 20px;
+}
