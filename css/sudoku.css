@@ -1,0 +1,279 @@
+/* Reset y estilos globales */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Mozilla Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    background: #112ca3;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    padding: 20px 40px;
+    position: relative;
+}
+
+header h1 {
+    animation: fadeInDown 0.6s ease-out;
+    color: white;
+    font-size: 2.5em;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    position: relative;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Main */
+main {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex: 1;
+    justify-content: center;
+}
+
+/* Footer */
+footer {
+    background: #112ca3;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    padding: 20px 40px;
+    position: relative;
+}
+
+footer p {
+    animation: fadeInUp 0.6s ease-out;
+    color: white;
+    font-size: 0.95em;
+    font-weight: 500;
+    position: relative;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Contenedor principal */
+.contenedor-principal {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    padding: 20px;
+}
+
+/* Mensajes */
+.mensaje {
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    display: none;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    padding: 12px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.mensaje.mensaje-sudoku {
+    width: calc(50px * 9 + 8 * 8px);
+}
+
+.error {
+    color: #e30000;
+}
+
+.exito {
+    color: #008d00;
+}
+
+.aviso {
+    color: #ffb01e;
+}
+
+/* Tablero */
+.tablero {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+/* Filas */
+.fila {
+    display: flex;
+    gap: 8px;
+}
+
+.fila-sudoku {
+    gap: 0;
+}
+
+/* Casillas */
+.casilla {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.5em;
+    height: 50px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: background-color 0.2s, transform 0.2s;
+    user-select: none;
+    width: 50px;
+}
+
+.casilla:hover {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transform: scale(1.05);
+}
+
+.casilla-llena {
+    background-color: #e4e4e4;
+}
+
+.invalido {
+    background-color: #ff7777;
+}
+
+.numero-completado {
+    background-color: #90EE90 !important;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Bordes del Sudoku */
+.borde-superior {
+    border-top: 2px solid #000;
+}
+
+.borde-izquierdo {
+    border-left: 2px solid #000;
+}
+
+.borde-inferior {
+    border-bottom: 2px solid #000;
+}
+
+.borde-derecho {
+    border-right: 2px solid #000;
+}
+
+/* Teclado */
+.teclado {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.fila-teclado {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.tecla {
+    align-items: center;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    cursor: pointer;
+    display: flex;
+    font-size: 1.2em;
+    height: 50px;
+    justify-content: center;
+    transition: background-color 0.2s, transform 0.2s;
+    user-select: none;
+    width: 50px;
+}
+
+.tecla:hover {
+    background-color: #ddd;
+    transform: scale(1.05);
+}
+
+.tecla.eliminar,
+.tecla.enviar {
+    width: 110px;
+}
+
+/* Sudoku */
+.sudoku {
+    gap: 0;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+    .casilla,
+    .tecla {
+        font-size: 1.1em;
+        height: 40px;
+        width: 40px;
+    }
+
+    .tecla.eliminar,
+    .tecla.enviar {
+        width: 80px;
+    }
+
+    .mensaje {
+        font-size: 16px;
+        padding: 10px 15px;
+    }
+
+    header {
+        padding: 15px 20px;
+    }
+
+    header h1 {
+        font-size: 2em;
+        letter-spacing: 1px;
+    }
+
+    footer {
+        padding: 15px 20px;
+    }
+
+    footer p {
+        font-size: 0.85em;
+    }
+
+    main {
+        margin: 10px;
+        padding: 15px;
+    }
+}
